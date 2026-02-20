@@ -97,6 +97,20 @@ POST https://agents.devnads.com/v1/verify
 | Testnet | https://testnet-rpc.monad.xyz |
 | Mainnet | https://rpc.monad.xyz |
 
+### Ejemplo de uso:
+
+Dale este mensaje a tu agente:
+
+> "Instálate estas skills y crea un token en nad.fun para mi app. 
+> Ya que esté tu wallet me la pasas para mandarte $MON"
+> 
+> - https://nad.fun/llms.txt
+> - https://raw.githubusercontent.com/portdeveloper/skills/refs/heads/master/skills/monad-development/SKILL.md
+
+### Recurso principal:
+
+🔗 **[Moltiverse Resources (Notion)](https://monad-foundation.notion.site/Moltiverse-resources-2fb6367594f280c3820adf679d9b35ff)**
+
 > **Nota:** Esto es opcional. Si no usas agentes IA, puedes ignorar esta sección.
 
 ## 📦 Qué incluye
