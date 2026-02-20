@@ -1,21 +1,20 @@
 'use client'
 
-import { useReadContract, useReadContracts } from 'wagmi'
+import { useReadContracts } from 'wagmi'
 import { useWallets } from '@privy-io/react-auth'
 import { BLITZ_COLLECTION_ADDRESS, BLITZ_COLLECTION_ABI } from '@/lib/contracts'
 import { MintButton } from './MintButton'
 
 const ITEMS = [
-  { id: 1, emoji: '🏅' },
-  { id: 2, emoji: '🎫' },
-  { id: 3, emoji: '👑' },
+  { id: 1, emoji: '🏅', color: 'from-yellow-500/20 to-amber-900/20', border: 'border-yellow-500/30' },
+  { id: 2, emoji: '🎫', color: 'from-blue-500/20 to-blue-900/20', border: 'border-blue-500/30' },
+  { id: 3, emoji: '👑', color: 'from-purple-500/20 to-purple-900/20', border: 'border-purple-500/30' },
 ]
 
 export function Collection() {
   const { wallets } = useWallets()
   const userAddress = wallets[0]?.address as `0x${string}` | undefined
 
-  // Leer info de todos los items
   const { data: itemsData, isLoading, refetch } = useReadContracts({
     contracts: ITEMS.flatMap(item => [
       {
@@ -35,10 +34,17 @@ export function Collection() {
 
   if (isLoading) {
     return (
-      <div className="text-center py-10">
-        <div className="animate-pulse text-monad-purple text-xl">
-          Cargando colección...
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {ITEMS.map((item) => (
+          <div 
+            key={item.id}
+            className="bg-gray-900 rounded-xl p-8 animate-pulse"
+          >
+            <div className="h-20 bg-gray-800 rounded-full w-20 mx-auto mb-4"></div>
+            <div className="h-6 bg-gray-800 rounded mb-2 mx-auto w-2/3"></div>
+            <div className="h-4 bg-gray-800 rounded mx-auto w-1/2"></div>
+          </div>
+        ))}
       </div>
     )
   }
@@ -54,28 +60,51 @@ export function Collection() {
         const maxSupply = itemInfo?.[2] || 0n
         const available = itemInfo?.[3] ?? true
 
+        const progress = maxSupply > 0n 
+          ? Number((currentSupply * 100n) / maxSupply) 
+          : 0
+
         return (
           <div 
             key={item.id}
-            className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-monad-purple transition-all"
+            className={`bg-gradient-to-br ${item.color} rounded-xl p-8 border ${item.border} hover:scale-105 transition-all duration-300`}
           >
-            <div className="text-6xl text-center mb-4">{item.emoji}</div>
+            {/* Emoji */}
+            <div className="text-7xl text-center mb-6 hover:animate-bounce cursor-default">
+              {item.emoji}
+            </div>
             
-            <h3 className="text-xl font-bold text-center mb-2">{name}</h3>
+            {/* Name */}
+            <h3 className="text-2xl font-bold text-center mb-2">{name}</h3>
             
+            {/* Supply */}
             <div className="text-center text-gray-400 text-sm mb-4">
               {maxSupply > 0n 
                 ? `${currentSupply.toString()} / ${maxSupply.toString()} minteados`
-                : `${currentSupply.toString()} minteados (ilimitado)`
+                : `${currentSupply.toString()} minteados • Ilimitado ∞`
               }
             </div>
 
-            {userAddress && balance !== undefined && balance > 0n && (
-              <div className="text-center text-monad-purple font-semibold mb-4">
-                ✨ Tienes: {balance.toString()}
+            {/* Progress bar (if limited) */}
+            {maxSupply > 0n && (
+              <div className="w-full bg-gray-800 rounded-full h-2 mb-4">
+                <div 
+                  className="bg-monad-purple h-2 rounded-full transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                ></div>
               </div>
             )}
 
+            {/* User balance */}
+            {userAddress && balance !== undefined && balance > 0n && (
+              <div className="text-center mb-4">
+                <span className="bg-monad-purple/30 text-monad-purple px-4 py-2 rounded-full text-sm font-semibold">
+                  ✨ Tienes: {balance.toString()}
+                </span>
+              </div>
+            )}
+
+            {/* Mint button */}
             {available ? (
               <MintButton 
                 tokenId={item.id} 
@@ -83,8 +112,10 @@ export function Collection() {
                 onSuccess={() => refetch()}
               />
             ) : (
-              <div className="text-center text-red-400 font-semibold">
-                ❌ Agotado
+              <div className="text-center">
+                <span className="bg-red-500/20 text-red-400 px-4 py-2 rounded-full text-sm font-semibold">
+                  ❌ Agotado
+                </span>
               </div>
             )}
           </div>
