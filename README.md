@@ -55,7 +55,7 @@ Explorer: https://monad-testnet.socialscan.io
 
 ```bash
 git clone https://github.com/fruterito101/monad-blitz-starter.git
-cd monad-blitz-starter/frontend
+cd monad-blitz-starter
 npm install
 cp .env.example .env.local
 # Crear cuenta en dashboard.privy.io y pegar App ID
@@ -79,7 +79,7 @@ forge script script/Deploy.s.sol:DeployScript \
   --private-key TU_PRIVATE_KEY \
   --broadcast
 
-# Copiar la dirección de TU contrato a frontend/.env.local
+# Copiar la dirección de TU contrato a .env.local (en la raíz)
 ```
 
 ### Opción C: Pedir ayuda a un agente IA
@@ -187,11 +187,12 @@ Dale este mensaje a tu agente:
 - Deploy script listo
 - Verificación incluida
 
-### Frontend (`/frontend`)
+### Frontend (raíz del proyecto)
 - **Next.js 14** con App Router
 - **Privy** para auth (Google, Email, Wallet)
 - **wagmi + viem** para interacción con contrato
 - Componentes listos para usar
+- **Vercel-ready** — solo conecta y deploya
 
 ## 🔧 Configuración
 
