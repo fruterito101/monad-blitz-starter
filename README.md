@@ -61,34 +61,41 @@ forge script script/Deploy.s.sol:DeployScript \
 
 > Si usas un agente de IA para programar (Claude, Cursor, OpenClaw, etc.), estas skills le ayudan a entender mejor Monad.
 
-### Skills recomendadas:
+### Skills recomendadas (Moltiverse):
 
-| Skill | Descripción | Instalación |
-|-------|-------------|-------------|
-| `monad-development` | Deploy, verificación, configuración de contratos en Monad | `clawhub install monad-development` |
-| `nad-fun` | Crear y tradear tokens en nad.fun (launchpad de Monad) | `clawhub install nad-fun` |
+| Skill | Descripción | Link |
+|-------|-------------|------|
+| **nad.fun** | Crear y tradear tokens en nad.fun | [clawhub.ai/portdeveloper/nadfun](https://www.clawhub.ai/portdeveloper/nadfun) |
+| **nad.fun token creation** | Flujo detallado de creación de tokens | [clawhub.ai/therealharpaljadeja/nadfun-token-creation](https://www.clawhub.ai/therealharpaljadeja/nadfun-token-creation) |
+| **monad-development** | Wallets, contratos, verificación | [gist.github.com/moltilad/...](https://gist.github.com/moltilad/31707d0fc206b960f4cbb13ea11954c2) |
 
-### ¿Qué hacen estas skills?
+### Documentación para Agentes:
 
-**monad-development:**
-- Configuración correcta de Foundry para Monad (evm_version: prague)
-- API de faucet para fondear wallets automáticamente
-- Verificación en todos los explorers con una sola llamada
-- Frontend con viem/wagmi pre-configurado
+| Recurso | URL |
+|---------|-----|
+| Nad.fun Skill | https://nad.fun/skill.md |
+| Nad.fun Token Creation | https://nad.fun/create.md |
+| Nad.fun Trading | https://nad.fun/trading.md |
+| Monad Docs | https://docs.monad.xyz |
+| Monad LLMs.txt | https://docs.monad.xyz/llms.txt |
 
-**nad-fun:**
-- Crear tokens con bonding curves
-- Trading y quotes
-- Integración con el launchpad de Monad
-
-### Instalación (si usas OpenClaw/ClawHub):
+### APIs útiles:
 
 ```bash
-clawhub install monad-development
-clawhub install nad-fun
+# Faucet (fondear wallet testnet)
+POST https://agents.devnads.com/v1/faucet
+{"chainId": 10143, "address": "0x..."}
+
+# Verificación de contratos
+POST https://agents.devnads.com/v1/verify
 ```
 
-O manualmente desde: https://clawhub.com
+### RPCs:
+
+| Network | RPC |
+|---------|-----|
+| Testnet | https://testnet-rpc.monad.xyz |
+| Mainnet | https://rpc.monad.xyz |
 
 > **Nota:** Esto es opcional. Si no usas agentes IA, puedes ignorar esta sección.
 
